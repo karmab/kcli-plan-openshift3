@@ -1,0 +1,13 @@
+parameters:
+  baseplan: origin.yml
+  persistent: true
+  large: false
+
+openwhisk:
+ files:
+  - path: /root/openwhisk_secret.sh
+    origin: openwhisk_secret.sh
+  - path: /root/larger.env
+    origin: larger.env
+ scripts: 
+  - openwhisk.sh
