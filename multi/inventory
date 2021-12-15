@@ -20,9 +20,9 @@ openshift_install_examples=false
 ansible_ssh_user=cloud-user
 ansible_become=True
 oreg_url={{ registry}}/openshift3/ose-${component}:v{{ version }}
-{% if registry == 'registry.redhat.io' and rhnuser is defined and rhnpassword is defined %}
-oreg_auth_user = {{ rhnuser }}
-oreg_auth_password = {{ rhnpassword }}
+{% if registry == 'registry.redhat.io' %}
+oreg_auth_user = {{ config_rhnuser }}
+oreg_auth_password = {{ config_rhnpassword }}
 {% endif %}
 openshift_release=v{{ version }}
 openshift_portal_net=172.30.0.0/16

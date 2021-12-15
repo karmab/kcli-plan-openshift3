@@ -1,13 +1,12 @@
 parameters:
  baseplan: origin.yml
  minishift_version: '1.26.0'
- openshift_version: 'v3.11'
  minishift_memory: 4096
  driver: generic
  deploy: false
 
 minishift:
- image: Fedora-Cloud-Base-28-1.1.x86_64.qcow2
+ image: fedora28
  numcpus: 2
  memory: {{ memory }}
 {% if driver == 'generic' %}

@@ -1,5 +1,4 @@
 parameters:
- openshift_version: 3.11
  image: rhel-server-7.5-x86_64-kvm.qcow2
  memory: 8192
 

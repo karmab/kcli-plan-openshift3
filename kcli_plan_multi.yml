@@ -1,5 +1,5 @@
 parameters:
- image: rhel-server-7.7-x86_64-kvm.qcow2
+ image: rhel7
  base_disk_size: 60
  glusterfs_disk_size: 60
  glusterfs_disk: vdb
@@ -22,7 +22,7 @@ parameters:
 
 {% for master in range(0, masters) %}
 m0{{ master + 1 }}:
- image: {{ template }}
+ image: {{ image }}
  numcpus: 2
  memory: {{ master_memory }}
  rhnregister: true
@@ -30,25 +30,23 @@ m0{{ master + 1 }}:
  sharedkey: true
  domain: {{ domain }}
  nets:
-  - default
+ - default
  disks:
-  - size: {{ base_disk_size }}
-  - size: {{ glusterfs_disk_size }}
+ - size: {{ base_disk_size }}
+ - size: {{ glusterfs_disk_size }}
  pool: {{ pool }}
  files:
-  - path: /root/inventory
-    origin: multi/inventory
-{% if type == 'ovirt' %}
-  - path: /root/ovirt_fix_inventory.sh
-    origin: multi/ovirt_fix_inventory.sh
-{% endif %}
-  - path: /root/install_openshift.sh
-    origin: multi/install_openshift.sh
+ - path: /root/inventory
+   origin: multi/inventory
+ - path: /etc/yum.repos.d/ose.repo
+   origin: multi/ose.repo
+ - path: /root/install_openshift.sh
+   origin: multi/install_openshift.sh
  scripts: 
-  - multi/subscription.sh
-  - multi/pre.sh
+ - multi/subscription.sh
+ - multi/pre.sh
 {% if deploy and master == 0 %}
-  - multi/install.sh
+ - multi/install.sh
  notify: true
  notifycmd: {{ notifycmd }}
 {% endif %}
@@ -56,7 +54,7 @@ m0{{ master + 1 }}:
 
 {% for node in range(0, nodes) %}
 n0{{ node + 1 }}:
- image: {{ template }}
+ image: {{ image }}
  numcpus: 2
  memory: {{ node_memory }}
  rhnregister: true
@@ -64,19 +62,22 @@ n0{{ node + 1 }}:
  sharedkey: true
  domain: {{ domain }}
  nets:
-  - default
+ - default
  disks:
-  - size: {{ base_disk_size }}
-  - size: {{ glusterfs_disk_size }}
+ - size: {{ base_disk_size }}
+ - size: {{ glusterfs_disk_size }}
  pool: {{ pool }}
+ files:
+ - path: /etc/yum.repos.d/ose.repo
+   origin: multi/ose.repo
  scripts: 
-  - multi/subscription.sh
-  - multi/pre.sh
+ - multi/subscription.sh
+ - multi/pre.sh
 {% endfor %}
 
 {% for infra in range(0, infras) %}
 i0{{ infra + 1 }}:
- image: {{ template }}
+ image: {{ image }}
  numcpus: 2
  memory: {{ infra_memory }}
  rhnregister: true
@@ -84,12 +85,16 @@ i0{{ infra + 1 }}:
  sharedkey: true
  domain: {{ domain }}
  nets:
-  - default
+ - default
  disks:
-  - size: {{ base_disk_size }}
-  - size: {{ glusterfs_disk_size }}
+ - size: {{ base_disk_size }}
+ - size: {{ glusterfs_disk_size }}
  pool: {{ pool }}
+ files:
+ - path: /etc/yum.repos.d/ose.repo
+   origin: multi/ose.repo
  scripts: 
-  - multi/subscription.sh
-  - multi/pre.sh
+ scripts: 
+ - multi/subscription.sh
+ - multi/pre.sh
 {% endfor %}

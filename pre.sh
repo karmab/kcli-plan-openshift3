@@ -10,11 +10,9 @@ docker-storage-setup
 echo """ADD_REGISTRY='--add-registry {{ registry }}'
 INSECURE_REGISTRY='--insecure-registry {{ registry }}'""" >> /etc/sysconfig/docker
 {% endif %}
-systemctl enable docker
-systemctl start docker
+systemctl enable --now docker
 {% endif %}
 
 yum -y update
 yum -y install NetworkManager
-systemctl enable NetworkManager
-systemctl start  NetworkManager
+systemctl enable --now NetworkManager

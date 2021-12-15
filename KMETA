@@ -1,52 +1,21 @@
 - name: openshift_origin
-  file: origin.yml
+  file: kcli_plan_origin.yml
   description: Upstream Openshift based on oc cluster up with istio, knative and asb
   numvms: 1
-  comments: openshift_version can also be set to to an older one and asb enabled
 
 - name: ocp3
-  file: downstream.yml
+  file: kcli_plan_downstream.yml
   description: Downstream Openshift 3.7 based on oc cluster up
   numvms: 1
   memory: 6144
 
 - name: openshift3_multi
-  file: multi.yml
+  file: kcli_plan_multi.yml
   description: Downstream ocp with arbitrary number of nodes
   comments: router and registry located on infra if present. gluster uses first 3 infra if present, otherwise 1 master and 2 infra
   numvms: 4
 
-- name: helm
-  file: helm.yml
-  description: Helm based on oc cluster up
-  numvms: 1
-
 - name: minishift
-  file: minishift.yml
-  description: minshift based on kvm driver or generic
-  numvms: 2
-
-- name: kubevirt
-  file: kubevirt.yml
-  description: Upstream Kubevirt all in one
-  numvms: 1
-
-- name: fission
-  file: fission.yml
-  description: Fission all in one
-  numvms: 1
-
-- name: openfaas
-  file: openfaas.yml
-  description: Openfaas all in one
-  numvms: 1
-  comments: OPENFAAS_URL OPENFAAS_UI are variables set to the function processor and ui respectively. two functions hellopy and hellojs can be called at $OPENFAAS_URL/function/hellopy and $OPENFAAS_URL/function/hellojs
-
-- name: openwhisk
-  file: openwhisk.yml
-  description: Latest Openwhisk based on oc cluster up
-
-- name: openshift3_federation
-  file: federation.yml
-  description: 2 federated vms with federated control plan. federation_version can also be set to canary 
+  file: kcli_plan_minishift.yml
+  description: minishift based on kvm driver or generic
   numvms: 2

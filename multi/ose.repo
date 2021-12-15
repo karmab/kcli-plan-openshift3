@@ -1,0 +1,5 @@
+[rhel-7-server-ose-3.11-rpms]
+name = rhel-7-server-ose-3.11-rpms
+baseurl = http://admin.na.shared.opentlc.com/repos/ocp/3.11.51/rhel-7-server-ose-3.11-rpms
+enabled = 1
+gpgcheck = 0
