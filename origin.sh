@@ -7,7 +7,7 @@ export HOME=/root
 sysctl -w net.ipv4.ip_forward=1
 export DNS={{ name }}.{{ domain }}
 {% else %}
-export DNS=`ip a l  eth0 | grep 'inet ' | cut -d' ' -f6 | awk -F'/' '{ print $1}'`.xip.io
+export DNS=`ip a l  eth0 | grep 'inet ' | cut -d' ' -f6 | awk -F'/' '{ print $1}'`.nip.io
 {% endif %}
 cd /root
 oc cluster up --public-hostname ${DNS} --routing-suffix ${DNS} --enable=router,registry,web-console,persistent-volumes,rhel-imagestreams --write-config

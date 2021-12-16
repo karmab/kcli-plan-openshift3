@@ -12,9 +12,9 @@ export ROUTERIP=`dig +short i01.{{ domain }}`
 {% else %}
 export ROUTERIP=$MASTERIP
 {% endif %}
-sed -i "s/#openshift_master_default_subdomain=.*/openshift_master_default_subdomain=app.$ROUTERIP.xip.io/" /root/inventory
-sed -i "s/#openshift_master_cluster_hostname=.*/openshift_master_cluster_hostname=$MASTERIP.xip.io/" /root/inventory
-sed -i "s/#openshift_master_cluster_public_hostname=.*/openshift_master_cluster_public_hostname=$MASTERIP.xip.io/" /root/inventory
+sed -i "s/#openshift_master_default_subdomain=.*/openshift_master_default_subdomain=app.$ROUTERIP.nip.io/" /root/inventory
+sed -i "s/#openshift_master_cluster_hostname=.*/openshift_master_cluster_hostname=$MASTERIP.nip.io/" /root/inventory
+sed -i "s/#openshift_master_cluster_public_hostname=.*/openshift_master_cluster_public_hostname=$MASTERIP.nip.io/" /root/inventory
 {% elif type == 'ovirt' %}
 sh /root/ovirt_fix_inventory.sh
 rm -rf /root/ovirt_fix_inventory.sh

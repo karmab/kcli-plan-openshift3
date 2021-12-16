@@ -8,7 +8,7 @@ VMIDS=`curl -sk -H "Accept: application/xml" -u  "${user}:${password}" "${url}/v
 for vmid in $VMIDS ; do
   name=`curl -sk -H "Accept: application/xml" -u  "${user}:${password}" "${url}/vms/${vmid}" |  grep -m1 '<name>'| sed 's@.*<name>\(.*\)</name>@\1@'`
   ip=`curl -sk -H "Accept: application/xml" -u  "${user}:${password}" "${url}/vms/${vmid}/reporteddevices" | grep -v : | grep -m1 address | sed 's@.*<address>\(.*\)</address>@\1@'`
-  newname=${name}.${ip}.xip.io
+  newname=${name}.${ip}.nip.io
   echo "Substituting ${name} for ${newname} in inventory"
   sed -i "s/${name}\.{{ domain }}/${newname}/g" /root/inventory
   echo ${name} | grep -q m01 && ip_master=$ip
@@ -17,9 +17,9 @@ for vmid in $VMIDS ; do
 done
 
 {% if infras > 0 %}
-default_subdomain=${ip_infra}.xip.io
+default_subdomain=${ip_infra}nip.io
 {% else %}
-default_subdomain=${ip_master}.xip.io
+default_subdomain=${ip_master}.nip.io
 {% endif %}
 sed -i "s/#openshift_master_default_subdomain=.*/openshift_master_default_subdomain=apps.${default_subdomain}/" /root/inventory
-sed -i "s/#openshift_master_cluster_hostname=.*/openshift_master_cluster_hostname=m01.${ip_master}.xip.io/" /root/inventory
+sed -i "s/#openshift_master_cluster_hostname=.*/openshift_master_cluster_hostname=m01.${ip_master}.nip.io/" /root/inventory
